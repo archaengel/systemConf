@@ -14,14 +14,7 @@
     '';
   };
 
-  networking.networkmanager = {
-    enable = true; # Easiest to use and most distros use this by default.
-    unmanaged = [
-      "*"
-      "except:type:wan"
-      "except:type:gsm"
-    ];
-  };
+  networking.wireless.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
