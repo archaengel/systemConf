@@ -14,7 +14,7 @@
     '';
   };
 
-  networking.wireless.enable = true;
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
