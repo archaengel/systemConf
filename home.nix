@@ -16,6 +16,11 @@
     plugins.lualine.enable = true;
   };
 
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.tmux = {
     enable = true;
     extraConfig = builtins.readFile "${dotfiles}/tmux/.tmux.conf";
