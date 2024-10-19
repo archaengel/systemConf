@@ -23,6 +23,26 @@
         "type": "github"
       }
     },
+    "dotfiles": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1729314758,
+        "narHash": "sha256-5xLFwTdPWYQwwe/OYGyBmttLl2Q46HaSktFrqz0z5Ts=",
+        "owner": "archaengel",
+        "repo": "dotfiles",
+        "rev": "f035b294e15790d68df3a1489573ad886a64f514",
+        "type": "github"
+      },
+      "original": {
+        "owner": "archaengel",
+        "repo": "dotfiles",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -239,6 +259,7 @@
     },
     "root": {
       "inputs": {
+        "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgsRegistry": "nixpkgsRegistry",

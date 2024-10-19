@@ -2,7 +2,10 @@
   description = "archaengel's NixOS Flake";
 
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [
       "https://cache.nixos.org"
     ];
@@ -24,31 +27,45 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, ... }: {
-    nixosConfigurations = {
-      "1134-nixos" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.archaengel = import ./home.nix;
-
-            home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-          }
-        ];
-
-        specialArgs = inputs;
-      };
+    dotfiles = {
+      url = "github:archaengel/dotfiles";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      dotfiles,
+      ...
+    }:
+    {
+      nixosConfigurations = {
+        "1134-nixos" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.archaengel = import ./home.nix;
+              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.extraSpecialArgs = inputs;
+            }
+          ];
+
+          specialArgs = inputs;
+        };
+      };
+    };
 }
