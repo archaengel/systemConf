@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-rpi5 = {
+      url = "gitlab:vriska/nix-rpi5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,23 +53,48 @@
       dotfiles,
       ...
     }:
+    let
+      username = "archaengel";
+      specialArgs = {
+        inherit username;
+      };
+    in
     {
       nixosConfigurations = {
         "1134-nixos" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./configuration.nix
+            ./machines/1134-nixos/configuration.nix
+            ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.archaengel = import ./home.nix;
+              home-manager.users.archaengel = import ./machines/1134-nixos/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-              home-manager.extraSpecialArgs = inputs;
+              home-manager.extraSpecialArgs = inputs // specialArgs;
             }
           ];
 
-          specialArgs = inputs;
+          specialArgs = inputs // specialArgs;
+        };
+
+        "nixpi5" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./machines/nixpi5/configuration.nix
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.archaengel = import ./machines/nixpi5/home.nix;
+              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+            }
+          ];
+
+          specialArgs = inputs // specialArgs;
         };
       };
     };
