@@ -11,6 +11,9 @@
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
+    packages = with pkgs; [
+      nixfmt-rfc-style
+    ];
   };
   programs.home-manager.enable = true;
 
@@ -23,6 +26,198 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 16;
+        spacing = 3;
+
+        "modules-left" = [
+          "hyprland/workspaces"
+          "group/usage"
+        ];
+        "modules-center" = [ "clock" ];
+        "modules-right" = [
+          "wireplumber"
+          "group/bat"
+          "group/net"
+          "tray"
+        ];
+
+        "group/usage" = {
+          "orientation" = "horizontal";
+          "modules" = [
+            "memory"
+            "temperature"
+          ];
+        };
+
+        "group/bat" = {
+          "orientation" = "horizontal";
+          "modules" = [
+            "battery"
+            "backlight"
+          ];
+        };
+
+        "group/net" = {
+          "orientation" = "horizontal";
+          "modules" = [
+            "hyprland/language"
+            "network"
+            "bluetooth"
+          ];
+        };
+
+        "hyprland/workspaces" = {
+          "format" = "{icon}";
+          "on-click" = "activate";
+          "format-icons" = {
+            "1" = "";
+            "2" = "";
+            "3" = "󰖟";
+            "4" = "󰀻";
+            "5" = "󰓇";
+          };
+          "icon-size" = 20;
+          "sort-by-number" = true;
+          "persistent-workspaces" = {
+            "1" = [ ];
+            "2" = [ ];
+            "3" = [ ];
+            "4" = [ ];
+            "5" = [ ];
+          };
+        };
+
+        "clock" = {
+          "format" = "{:%d.%m.%Y | %H:%M}";
+        };
+
+        "wireplumber" = {
+          "format" = "󰖀 {volume}%";
+          "max-volume" = 100;
+          "scroll-step" = 5;
+        };
+
+        "battery" = {
+          "bat" = "BAT1";
+          "interval" = 60;
+          "format" = "{icon}  {capacity}%";
+          "format-icons" = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+
+        "backlight" = {
+          "format" = "󰃞 {percent}%";
+        };
+
+        "memory" = {
+          "interval" = 30;
+          "format" = "󰍛 {used:0.1f}G";
+        };
+
+        "temperature" = {
+          "format" = " {temperatureC}°C";
+        };
+
+        "network" = {
+          "format" = "";
+          "format-ethernet" = "󰲝 ";
+          "format-wifi" = "{icon} ";
+          "format-disconnected" = "󰲜 ";
+          "format-icons" = [
+            "󰤯"
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
+          "tooltip-format-wifi" = "{essid} ({signalStrength}%)";
+          "tooltip-format-ethernet" = "{ifname}";
+          "tooltip-format-disconnected" = "Disconnected";
+        };
+
+        "bluetooth" = {
+          "format" = "󰂯";
+          "format-disabled" = "󰂲";
+          "format-connected" = "󰂱";
+          "tooltip-format" = "{controller_alias}\t{controller_address}";
+          "tooltip-format-connected" = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+          "tooltip-format-enumerate-connected" = "{device_alias}\t{device_address}";
+        };
+
+        "hyprland/language" = {
+          "format" = "{short}";
+        };
+
+        "tray" = {
+          "icon-size" = 16;
+          "spacing" = 16;
+        };
+      };
+    };
+    style = ''
+      @define-color foreground #eff0f1;
+      @define-color foreground-inactive #7f8c8d;
+      @define-color background #232629;
+      @define-color background-alt #31363b;
+
+      * {
+          font-family: JetBrainsMono Nerd Font;
+          font-size: 12px;
+          padding: 0;
+          margin: 0;
+      }
+
+      #waybar {
+          color: @foreground;
+          background-color: @background;
+      }
+
+      #workspaces button {
+          padding-left: 1em;
+          padding-right: 1.3em;
+      }
+
+      #workspaces button.empty {
+          color: @foreground-inactive;
+      }
+
+      #workspaces button.active {
+          background-color: @background-alt;
+          border-radius: 3px;
+      }
+
+      #wireplumber,
+      #bat,
+      #tray,
+      #usage,
+      #net {
+          background-color: @background-alt;
+          border-radius: 3px;
+          padding-left: 0.5em;
+          padding-right: 0.5em;
+          margin-left: 0.3em;
+      }
+
+      #battery,
+      #memory,
+      #language,
+      #network {
+          margin-right: 0.8em;
+      }
+    '';
   };
 
   programs.tmux = {
@@ -65,6 +260,9 @@
     enable = true;
     settings = {
       "$mod" = "ALT";
+      exec-once = [
+        "${pkgs.waybar}/bin/waybar"
+      ];
     };
     extraConfig = ''
       # This is an example Hyprland config file.
@@ -97,18 +295,6 @@
       $terminal = kitty
       $fileManager = yazi
       $menu = wofi --show drun
-
-
-      #################
-      ### AUTOSTART ###
-      #################
-
-      # Autostart necessary processes (like notifications daemons, status bars, etc.)
-      # Or execute your favorite apps at launch like this:
-
-      # exec-once = $terminal
-      # exec-once = nm-applet &
-      # exec-once = waybar & hyprpaper & firefox
 
 
       #############################
