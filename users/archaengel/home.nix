@@ -259,7 +259,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      "$mod" = "ALT";
+      "$mainMod" = "ALT";
       exec-once = [
         "${pkgs.waybar}/bin/waybar"
       ];
@@ -427,9 +427,6 @@
       ####################
       ### KEYBINDINGSS ###
       ####################
-
-      # See https://wiki.hyprland.org/Configuring/Keywords/
-      $mainMod = ALT
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, $terminal
