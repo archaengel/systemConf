@@ -3,12 +3,13 @@
   lib,
   pkgs,
   username,
+  ghostty,
   ...
 }:
 
 {
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -20,8 +21,9 @@
   time.timeZone = "America/Los_Angeles";
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrains-mono
   ];
+
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -42,6 +44,7 @@
     packages = with pkgs; [
       vivaldi
       kitty
+      ghostty.packages.${system}.default
       tmux
       btop
       tree

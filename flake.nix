@@ -42,6 +42,10 @@
       url = "github:archaengel/dotfiles";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
   outputs =
@@ -51,6 +55,7 @@
       home-manager,
       nixvim,
       dotfiles,
+      ghostty,
       ...
     }:
     let
