@@ -59,47 +59,69 @@
       ...
     }:
     let
-      username = "archaengel";
-      specialArgs = {
-        inherit username;
+      personalUser = "archaengel";
+      personalArgs = {
+        username = personalUser;
+      };
+      nonPersonalUser = "edwardnuno";
+      nonPersonalArgs = {
+        username = nonPersonalUser;
       };
     in
     {
       nixosConfigurations = {
         "1134-nixos" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
+          modules = with personalArgs; [
             ./machines/1134-nixos/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.archaengel = import ./machines/1134-nixos/home.nix;
+              home-manager.users.${username} = import ./machines/1134-nixos/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.extraSpecialArgs = inputs // personalArgs;
             }
           ];
 
-          specialArgs = inputs // specialArgs;
+          specialArgs = inputs // personalArgs;
+        };
+
+        "1134-gsfw" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = with nonPersonalArgs; [
+            ./machines/1134-gsfw/configuration.nix
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./machines/1134-gsfw/home.nix;
+              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+            }
+          ];
+
+          specialArgs = inputs // nonPersonalArgs;
         };
 
         "nixpi5" = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [
+          modules = with personalArgs; [
             ./machines/nixpi5/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.archaengel = import ./machines/nixpi5/home.nix;
+              home-manager.users.${username} = import ./machines/nixpi5/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.extraSpecialArgs = inputs // personalArgs;
             }
           ];
 
-          specialArgs = inputs // specialArgs;
+          specialArgs = inputs // personalArgs;
         };
       };
     };
