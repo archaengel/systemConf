@@ -24,6 +24,10 @@
     };
   };
 
+  # Disabling due to disputed: CVE-2024-37408
+  security.pam.services.sudo.fprintAuth = false;
+  security.pam.services.su.fprintAuth = false;
+
 
   services.fprintd = {
     enable = true;
