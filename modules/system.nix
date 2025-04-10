@@ -53,6 +53,7 @@
       })
       kitty
       ghostty.packages.${system}.default
+      grimblast
       tmux
       btop
       tree

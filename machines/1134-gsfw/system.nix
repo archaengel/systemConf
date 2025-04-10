@@ -8,13 +8,60 @@
 {
   environment.systemPackages = with pkgs; [
     brightnessctl
+    hyprlock
+    fw-ectool
+    lm_sensors
   ];
+
+  # Enable fw-fanctrl
+  programs.fw-fanctrl.enable = true;
+
+  # Add a custom config
+  programs.fw-fanctrl.config = {
+    defaultStrategy = "lazy";
+    strategies = {
+      "lazy" = {
+        fanSpeedUpdateFrequency = 5;
+        movingAverageInterval = 30;
+        speedCurve = [
+          {
+            temp = 0;
+            speed = 25;
+          }
+          {
+            temp = 50;
+            speed = 25;
+          }
+          {
+            temp = 65;
+            speed = 35;
+          }
+          {
+            temp = 70;
+            speed = 45;
+          }
+          {
+            temp = 75;
+            speed = 60;
+          }
+          {
+            temp = 80;
+            speed = 100;
+          }
+        ];
+      };
+    };
+  };
 
   security.pam.services.greetd = {
     rules.auth.unix = {
       enable = true;
       control = "sufficient";
-      args = ["try_first_pass" "likeauth" "nullok"];
+      args = [
+        "try_first_pass"
+        "likeauth"
+        "nullok"
+      ];
     };
 
     rules.auth.fprintd = {
@@ -28,6 +75,7 @@
   security.pam.services.sudo.fprintAuth = false;
   security.pam.services.su.fprintAuth = false;
 
+  security.pam.services.hyprlock.fprintAuth = true;
 
   services.fprintd = {
     enable = true;
