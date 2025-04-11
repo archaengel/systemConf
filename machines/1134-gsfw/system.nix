@@ -75,7 +75,23 @@
   security.pam.services.sudo.fprintAuth = false;
   security.pam.services.su.fprintAuth = false;
 
-  security.pam.services.hyprlock.fprintAuth = true;
+  security.pam.services.hyprlock = {
+    rules.auth.unix = {
+      enable = true;
+      control = "sufficient";
+      args = [
+        "try_first_pass"
+        "likeauth"
+        "nullok"
+      ];
+    };
+
+    rules.auth.fprintd = {
+      enable = true;
+      order = config.security.pam.services.hyprlock.rules.auth.unix.order + 1;
+      control = "sufficient";
+    };
+  };
 
   services.fprintd = {
     enable = true;

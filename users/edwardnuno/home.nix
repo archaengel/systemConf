@@ -15,6 +15,7 @@
       nixfmt-rfc-style
       swappy
       grimblast
+      gh
     ];
   };
   programs.home-manager.enable = true;
