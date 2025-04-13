@@ -8,6 +8,7 @@
 {
   environment.systemPackages = with pkgs; [
     brightnessctl
+    bluetui
     hyprlock
     fw-ectool
     lm_sensors

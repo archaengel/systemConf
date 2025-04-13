@@ -14,9 +14,16 @@
     ./system.nix
   ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  hardware.bluetooth.enable = true;
 
   networking.hostName = "1134-gsfw"; # Define your hostname.
 
