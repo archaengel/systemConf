@@ -10,21 +10,19 @@
 {
   home = {
     inherit username;
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
     homeDirectory = "/home/${username}";
     packages = with pkgs; [
       nixfmt-rfc-style
       swappy
       grimblast
       gh
+      dotfiles.packages.${pkgs.system}.nvim
     ];
   };
   programs.home-manager.enable = true;
-
-  programs.nixvim = {
-    enable = true;
-    colorschemes.gruvbox.enable = true;
-    plugins.lualine.enable = true;
-  };
 
   programs.yazi = {
     enable = true;
@@ -34,6 +32,9 @@
   programs.hyprlock = {
     enable = true;
     settings = {
+      general = {
+        cursor = false;
+      };
       background = {
         path = "screenshot";
         blur_passes = 2;
@@ -45,10 +46,19 @@
         dots_center = true;
         fade_on_empty = false;
         font_color = "rgb(0, 0, 0)";
-        inner_color = "rgb(256, 256, 256, 0.8)";
+        inner_color = "rgb(200, 200, 200, 0.1)";
         outer_color = "rgb(24, 25, 38)";
-        outline_thickness = 5;
-        placeholder_text = "password...";
+        outline_thickness = 3;
+        placeholder_text = "...";
+        rounding = 4;
+      };
+      label = {
+        monitor = "";
+        font_size = 48;
+        font_family = "Jet Brains Mono";
+        text = "$TIME";
+        halign = "center";
+        valign = "center";
       };
     };
   };
