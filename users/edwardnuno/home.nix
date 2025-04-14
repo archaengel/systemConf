@@ -443,7 +443,7 @@ in
       ################
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=,preferred,auto,auto
+      monitor=,preferred,auto-up,auto
 
 
       ###################
@@ -466,6 +466,7 @@ in
 
       env = XCURSOR_SIZE,24
       env = HYPRCURSOR_SIZE,24
+      env = GTK_THEME,Adwaita:dark
       env = GRIMBLAST_EDITOR,swappy -f 
 
 
