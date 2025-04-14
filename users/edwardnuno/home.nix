@@ -36,7 +36,7 @@ in
       grimblast
       gh
       dotfiles.packages.${pkgs.system}.nvim
-
+      playerctl
       slack
       spotify
       pavucontrol
@@ -595,13 +595,17 @@ in
       bind = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
       bind = , XF86MonBrightnessUp, exec, brightnessctl set +5%
 
+      bindl = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+      bindl = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bindl = , XF86AudioPlay, exec, playerctl play-pause
+
       bind = , Print, exec, grimblast edit area
       bind = $mainMod, Q, exec, $terminal
       bind = $mainMod, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, $fileManager
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, R, exec, $menu
+      bind = $mainMod, R, exec, pkill wofi || $menu
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, J, togglesplit, # dwindle
 
