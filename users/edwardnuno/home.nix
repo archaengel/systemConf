@@ -36,6 +36,10 @@ in
       grimblast
       gh
       dotfiles.packages.${pkgs.system}.nvim
+
+      slack
+      spotify
+      pavucontrol
     ];
   };
   programs.home-manager.enable = true;
