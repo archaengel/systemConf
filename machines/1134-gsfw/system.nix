@@ -10,8 +10,10 @@
     brightnessctl
     bluetui
     hyprlock
+    hyprpaper
     fw-ectool
     lm_sensors
+    wl-clipboard
   ];
 
   # Enable fw-fanctrl
