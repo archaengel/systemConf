@@ -7,6 +7,22 @@
   ...
 }:
 
+let
+  # TODO: Should put this in an overlay
+  # The original package overrides the PATH var in the wrapper script
+  # which prevents systems without `sed` in `usr/bin:bin` from executing
+  # the service.
+  safe-termfilechooser = (
+    pkgs.xdg-desktop-portal-termfilechooser.overrideAttrs (
+      finalAttrs: prevAttrs: {
+        patches = [
+          ../../patches/xdg-desktop-portal-termfilechooser.patch
+        ];
+      }
+    )
+  );
+
+in
 {
   home = {
     inherit username;
@@ -23,6 +39,26 @@
     ];
   };
   programs.home-manager.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      safe-termfilechooser
+    ];
+    config = {
+      common = {
+        "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
+      };
+    };
+  };
+
+  xdg.configFile."xdg-desktop-portal-termfilechooser/config" = {
+    text = ''
+      [filechooser]
+      cmd=${safe-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+      env=TERMCMD=ghostty -e
+    '';
+  };
 
   programs.yazi = {
     enable = true;
