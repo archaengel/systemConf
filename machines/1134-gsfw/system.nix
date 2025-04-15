@@ -16,6 +16,8 @@
     wl-clipboard
   ];
 
+  virtualisation.docker.enable = true;
+
   # Enable fw-fanctrl
   programs.fw-fanctrl.enable = true;
 

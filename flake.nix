@@ -107,6 +107,7 @@
               home-manager.users.${username} = import ./machines/1134-gsfw/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
               home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+              home-manager.backupFileExtension = "backup";
             }
           ];
 

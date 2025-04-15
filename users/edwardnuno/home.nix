@@ -343,6 +343,16 @@ in
     };
   };
 
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = username;
+        email = "god11341258@gmail.com";
+      };
+    };
+  };
+
   programs.zsh = {
     defaultKeymap = "viins";
     enable = true;

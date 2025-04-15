@@ -37,9 +37,10 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     extraGroups = [
-      "wheel"
+      "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
-    ]; # Enable ‘sudo’ for the user.
+      "docker"
+    ];
     packages = with pkgs; [
       (vivaldi.override {
         proprietaryCodecs = true;
