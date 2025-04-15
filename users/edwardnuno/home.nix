@@ -350,6 +350,10 @@ in
         name = username;
         email = "god11341258@gmail.com";
       };
+      ui = {
+        paginate = "never";
+        default-command = "log";
+      };
     };
   };
 
@@ -478,6 +482,7 @@ in
       env = HYPRCURSOR_SIZE,24
       env = GTK_THEME,Adwaita:dark
       env = GRIMBLAST_EDITOR,swappy -f 
+      env = NIXOS_OZONE_WL,1
 
 
       #####################
