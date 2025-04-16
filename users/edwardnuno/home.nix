@@ -608,8 +608,8 @@ in
       ####################
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
-      bind = , XF86MonBrightnessUp, exec, brightnessctl set +5%
+      bindl = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
+      bindl = , XF86MonBrightnessUp, exec, brightnessctl set +5%
 
       bindl = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
       bindl = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
@@ -617,7 +617,7 @@ in
 
       bind = , Print, exec, grimblast edit area
       bind = $mainMod, Q, exec, $terminal
-      bind = $mainMod, C, killactive,
+      bind = $mainMod SHIFT, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, $fileManager
       bind = $mainMod, V, togglefloating,
