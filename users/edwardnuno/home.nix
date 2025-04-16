@@ -40,6 +40,7 @@ in
       slack
       spotify
       pavucontrol
+      hyprnotify
     ];
   };
   programs.home-manager.enable = true;
@@ -437,6 +438,7 @@ in
       exec-once = [
         "${pkgs.waybar}/bin/waybar"
         "${pkgs.hyprpaper}/bin/hyprpaper"
+        "hyprnotify"
       ];
     };
     extraConfig = ''
