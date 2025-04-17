@@ -41,6 +41,7 @@ in
       spotify
       pavucontrol
       hyprnotify
+      terraform
     ];
   };
   programs.home-manager.enable = true;
