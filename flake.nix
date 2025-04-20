@@ -46,6 +46,11 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
+
+    fw-fanctrl = {
+      url = "github:TamtamHero/fw-fanctrl/packaging/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -56,50 +61,75 @@
       nixvim,
       dotfiles,
       ghostty,
+      fw-fanctrl,
       ...
     }:
     let
-      username = "archaengel";
-      specialArgs = {
-        inherit username;
+      personalUser = "archaengel";
+      personalArgs = {
+        username = personalUser;
+      };
+      nonPersonalUser = "edwardnuno";
+      nonPersonalArgs = {
+        username = nonPersonalUser;
       };
     in
     {
       nixosConfigurations = {
         "1134-nixos" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
+          modules = with personalArgs; [
             ./machines/1134-nixos/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.archaengel = import ./machines/1134-nixos/home.nix;
+              home-manager.users.${username} = import ./machines/1134-nixos/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.extraSpecialArgs = inputs // personalArgs;
             }
           ];
 
-          specialArgs = inputs // specialArgs;
+          specialArgs = inputs // personalArgs;
+        };
+
+        "1134-gsfw" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = with nonPersonalArgs; [
+            fw-fanctrl.nixosModules.default
+            ./machines/1134-gsfw/configuration.nix
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./machines/1134-gsfw/home.nix;
+              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+
+          specialArgs = inputs // nonPersonalArgs;
         };
 
         "nixpi5" = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [
+          modules = with personalArgs; [
             ./machines/nixpi5/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.archaengel = import ./machines/nixpi5/home.nix;
+              home-manager.users.${username} = import ./machines/nixpi5/home.nix;
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
-              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.extraSpecialArgs = inputs // personalArgs;
             }
           ];
 
-          specialArgs = inputs // specialArgs;
+          specialArgs = inputs // personalArgs;
         };
       };
     };

@@ -1,0 +1,12 @@
+diff --git a/contrib/yazi-wrapper.sh b/contrib/yazi-wrapper.sh
+index 53e4c7e..7567778 100755
+--- a/contrib/yazi-wrapper.sh
++++ b/contrib/yazi-wrapper.sh
+@@ -4,7 +4,6 @@
+ # For more information about input/output arguments read `xdg-desktop-portal-termfilechooser(5)`
+ 
+ set -ex
+-PATH="/usr/bin:/bin"
+ 
+ multiple="$1"
+ directory="$2"

@@ -24,7 +24,6 @@
     nerd-fonts.jetbrains-mono
   ];
 
-
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -38,13 +37,24 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     extraGroups = [
-      "wheel"
+      "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
-    ]; # Enable ‘sudo’ for the user.
+      "docker"
+    ];
     packages = with pkgs; [
-      vivaldi
+      (vivaldi.override {
+        proprietaryCodecs = true;
+        enableWidevine = true;
+        commandLineArgs = [
+          "--enable-features=UseOzonePlatform"
+          "--ozone-platform=wayland"
+          "--ozone-platform-hint=auto"
+          "--enable-features=WaylandWindowDecorations"
+        ];
+      })
       kitty
       ghostty.packages.${system}.default
+      grimblast
       tmux
       btop
       tree
@@ -57,6 +67,7 @@
     ];
   };
 
+  programs.direnv.enable = true;
   programs.zsh.enable = true;
   programs.git = {
     enable = true;
