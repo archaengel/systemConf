@@ -8,6 +8,9 @@
 }:
 
 {
+
+  imports = [ ../../modules/home/tmux.nix ];
+
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
@@ -218,11 +221,6 @@
           margin-right: 0.8em;
       }
     '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    extraConfig = builtins.readFile "${dotfiles}/tmux/.tmux.conf";
   };
 
   programs.git = {

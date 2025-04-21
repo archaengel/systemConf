@@ -27,6 +27,7 @@ in
   imports = [
     ../../modules/home/jujutsu.nix
     ../../modules/home/hyprland.nix
+    ../../modules/home/tmux.nix
   ];
 
   home = {
@@ -333,11 +334,6 @@ in
           margin-right: 0.8em;
       }
     '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    extraConfig = builtins.readFile "${dotfiles}/tmux/.tmux.conf";
   };
 
   programs.git = {
