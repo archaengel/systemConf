@@ -40,6 +40,7 @@ in
       nixfmt-rfc-style
       swappy
       grimblast
+      delta
       gh
       dotfiles.packages.${pkgs.system}.nvim
       playerctl
