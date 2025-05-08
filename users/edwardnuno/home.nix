@@ -49,6 +49,14 @@ in
       pavucontrol
       hyprnotify
       terraform
+      jq
+      discord
+      (google-cloud-sdk.withExtraComponents (
+        with google-cloud-sdk.components;
+        [
+          gke-gcloud-auth-plugin
+        ]
+      ))
     ];
   };
   programs.home-manager.enable = true;
