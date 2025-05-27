@@ -27,6 +27,7 @@ in
   imports = [
     ../../modules/home/jujutsu.nix
     ../../modules/home/hyprland.nix
+    ../../modules/home/tmux.nix
   ];
 
   home = {
@@ -39,6 +40,7 @@ in
       nixfmt-rfc-style
       swappy
       grimblast
+      delta
       gh
       dotfiles.packages.${pkgs.system}.nvim
       playerctl
@@ -47,6 +49,14 @@ in
       pavucontrol
       hyprnotify
       terraform
+      jq
+      discord
+      (google-cloud-sdk.withExtraComponents (
+        with google-cloud-sdk.components;
+        [
+          gke-gcloud-auth-plugin
+        ]
+      ))
     ];
   };
   programs.home-manager.enable = true;
@@ -333,11 +343,6 @@ in
           margin-right: 0.8em;
       }
     '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    extraConfig = builtins.readFile "${dotfiles}/tmux/.tmux.conf";
   };
 
   programs.git = {

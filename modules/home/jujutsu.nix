@@ -8,8 +8,12 @@
         email = "god11341258@gmail.com";
       };
       ui = {
-        paginate = "never";
-        default-command = "log";
+        default-command = [
+          "log"
+          "--no-pager"
+        ];
+        pager = "delta";
+        diff.format = "git";
       };
     };
   };
