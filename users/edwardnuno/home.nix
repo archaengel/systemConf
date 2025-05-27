@@ -37,26 +37,30 @@ in
     };
     homeDirectory = "/home/${username}";
     packages = with pkgs; [
-      nixfmt-rfc-style
-      swappy
-      grimblast
       delta
-      gh
-      dotfiles.packages.${pkgs.system}.nvim
-      playerctl
-      slack
-      spotify
-      pavucontrol
-      hyprnotify
-      terraform
-      jq
       discord
+      dotfiles.packages.${pkgs.system}.nvim
+      gh
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [
           gke-gcloud-auth-plugin
         ]
       ))
+      grimblast
+      hyprnotify
+      jq
+      ncspot
+      nixfmt-rfc-style
+      nmap
+      pavucontrol
+      playerctl
+      ripgrep
+      slack
+      spotify
+      swappy
+      terraform
+      uutils-coreutils-noprefix
     ];
   };
   programs.home-manager.enable = true;

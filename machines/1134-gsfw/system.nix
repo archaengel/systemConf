@@ -16,6 +16,8 @@
     wl-clipboard
   ];
 
+  programs.nix-ld.enable = true;
+
   virtualisation.docker.enable = true;
 
   # Enable fw-fanctrl
