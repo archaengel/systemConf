@@ -103,4 +103,8 @@
   services.fprintd = {
     enable = true;
   };
+
+  services.twingate = {
+    enable = true;
+  };
 }

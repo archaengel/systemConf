@@ -28,6 +28,7 @@ in
     ../../modules/home/jujutsu.nix
     ../../modules/home/hyprland.nix
     ../../modules/home/tmux.nix
+    ../../modules/home/qutebrowser.nix
   ];
 
   home = {
@@ -50,6 +51,7 @@ in
       grimblast
       hyprnotify
       jq
+      kubectl
       ncspot
       nixfmt-rfc-style
       nmap
@@ -60,6 +62,7 @@ in
       spotify
       swappy
       terraform
+      twingate
       uutils-coreutils-noprefix
     ];
   };
@@ -359,10 +362,13 @@ in
     };
   };
 
+  # TODO: Checkout `dotDir` to attempt to setup nixCats-style unwrapped rc for
+  # quick development loops on the zsh config
   programs.zsh = {
     defaultKeymap = "viins";
     enable = true;
     syntaxHighlighting.enable = true;
+    enableCompletion = true;
     history = {
       ignoreDups = true;
       ignoreSpace = true;
@@ -378,6 +384,17 @@ in
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
     ];
+    shellAliases = {
+      lr = "ls -hartl";
+    };
+    profileExtra = ''
+      function gj() {
+          local rev=$1; shift
+          local bm=$(jj bookmark list -r $rev -T name)
+
+          gh "$@" $bm
+      }
+    '';
   };
 
   programs.wofi = {
