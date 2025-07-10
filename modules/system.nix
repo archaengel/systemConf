@@ -18,7 +18,8 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  services.automatic-timezoned.enable = true;
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
@@ -112,6 +113,18 @@
         	  --cmd Hyprland
       '';
     };
+  };
+
+  # Prevent other systemd logs from overriding tuigreet lines
+  # https://www.reddit.com/r/NixOS/comments/u0cdpi/tuigreet_with_xmonad_how/
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardOutput = "tty";
+    StandardInput = "tty";
+    StandardError = "journal";
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVDisallocate = true;
   };
 
   environment.etc."greetd/environments".text = ''
