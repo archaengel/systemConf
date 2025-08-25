@@ -22,6 +22,13 @@ let
     )
   );
 
+  gj = pkgs.writeShellScriptBin "gj" ''
+    rev=$1; shift
+    bm=$(jj bookmark list -r $rev -T name)
+
+    gh "$@" $bm
+  '';
+
 in
 {
   imports = [
@@ -42,6 +49,7 @@ in
       discord
       dotfiles.packages.${pkgs.system}.nvim
       gh
+      gj
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [
@@ -67,6 +75,8 @@ in
     ];
   };
   programs.home-manager.enable = true;
+
+  xdg.mimeApps.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -356,6 +366,7 @@ in
     enable = true;
     userName = username;
     userEmail = "god11341258@gmail.com";
+    lfs.enable = true;
     extraConfig = {
       init.defaultBranch = "main";
       credential.helper = "store";
@@ -387,14 +398,6 @@ in
     shellAliases = {
       lr = "ls -hartl";
     };
-    profileExtra = ''
-      function gj() {
-          local rev=$1; shift
-          local bm=$(jj bookmark list -r $rev -T name)
-
-          gh "$@" $bm
-      }
-    '';
   };
 
   programs.wofi = {

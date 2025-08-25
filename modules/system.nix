@@ -70,6 +70,7 @@
       syncthing
       cachix
       wofi
+      radicle-node
     ];
   };
 
@@ -91,7 +92,11 @@
     git
     vim
     wget
+    man-pages
+    man-pages-posix
   ];
+
+  documentation.dev.enable = true;
 
   programs.sway.enable = true;
   programs.hyprland.enable = true;
@@ -141,6 +146,15 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  nix.settings.trusted-users = [ username ];
+  nix.settings = {
+    trusted-users = [ username ];
+    trusted-public-keys = [
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+    ];
+    substituters = [
+      "https://cache.iog.io"
+    ];
+  };
+
   nixpkgs.config.allowUnfree = true;
 }

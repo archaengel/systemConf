@@ -236,6 +236,7 @@
   programs.zsh = {
     defaultKeymap = "viins";
     enable = true;
+    enableCompletion = true;
     syntaxHighlighting.enable = true;
     history = {
       ignoreDups = true;
