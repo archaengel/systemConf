@@ -35,11 +35,11 @@
         "plugins-vscode-js-debug": "plugins-vscode-js-debug"
       },
       "locked": {
-        "lastModified": 1751986054,
-        "narHash": "sha256-qPzxQ3iDnQwqJXnADwob8wiQM66UVki2rK6hl7l+2Kw=",
+        "lastModified": 1756320751,
+        "narHash": "sha256-lxoYxfxLursLj2wTKlV/8CMUmG0zc+TWlVyRdgvKF5A=",
         "owner": "archaengel",
         "repo": "dotfiles",
-        "rev": "a999f56ed45c36f583f4b9e862fe4708cf791e47",
+        "rev": "11b1b90023b947726f260d2aabb6e887b670cc1d",
         "type": "github"
       },
       "original": {
