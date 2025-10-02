@@ -45,10 +45,6 @@
 
     ghostty = {
       url = "github:ghostty-org/ghostty";
-    };
-
-    fw-fanctrl = {
-      url = "github:TamtamHero/fw-fanctrl/packaging/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -61,7 +57,6 @@
       nixvim,
       dotfiles,
       ghostty,
-      fw-fanctrl,
       ...
     }:
     let
@@ -97,7 +92,6 @@
         "1134-gsfw" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = with nonPersonalArgs; [
-            fw-fanctrl.nixosModules.default
             ./machines/1134-gsfw/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager

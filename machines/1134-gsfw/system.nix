@@ -35,50 +35,10 @@
 
   virtualisation.docker.enable = true;
 
-  # Enable fw-fanctrl
-  programs.fw-fanctrl.enable = true;
-
   # Avoid bugs with npm like https://github.com/NixOS/nixpkgs/issues/16441
   programs.npm.enable = true;
 
   programs.ssh.startAgent = true;
-
-  # Add a custom config
-  programs.fw-fanctrl.config = {
-    defaultStrategy = "lazy";
-    strategies = {
-      "lazy" = {
-        fanSpeedUpdateFrequency = 5;
-        movingAverageInterval = 30;
-        speedCurve = [
-          {
-            temp = 0;
-            speed = 25;
-          }
-          {
-            temp = 50;
-            speed = 25;
-          }
-          {
-            temp = 65;
-            speed = 35;
-          }
-          {
-            temp = 70;
-            speed = 45;
-          }
-          {
-            temp = 75;
-            speed = 60;
-          }
-          {
-            temp = 80;
-            speed = 100;
-          }
-        ];
-      };
-    };
-  };
 
   security.pam.services.greetd = {
     rules.auth.unix = {

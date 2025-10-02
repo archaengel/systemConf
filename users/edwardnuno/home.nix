@@ -12,15 +12,15 @@ let
   # The original package overrides the PATH var in the wrapper script
   # which prevents systems without `sed` in `usr/bin:bin` from executing
   # the service.
-  safe-termfilechooser = (
-    pkgs.xdg-desktop-portal-termfilechooser.overrideAttrs (
-      finalAttrs: prevAttrs: {
-        patches = [
-          ../../patches/xdg-desktop-portal-termfilechooser.patch
-        ];
-      }
-    )
-  );
+  #safe-termfilechooser = (
+  #pkgs.xdg-desktop-portal-termfilechooser.overrideAttrs (
+  #finalAttrs: prevAttrs: {
+  #patches = [
+  #../../patches/xdg-desktop-portal-termfilechooser.patch
+  #];
+  #}
+  #)
+  #);
 
   gj = pkgs.writeShellScriptBin "gj" ''
     rev=$1; shift
@@ -81,7 +81,7 @@ in
   xdg.portal = {
     enable = true;
     extraPortals = [
-      safe-termfilechooser
+      pkgs.xdg-desktop-portal-termfilechooser
     ];
     config = {
       common = {
@@ -93,7 +93,7 @@ in
   xdg.configFile."xdg-desktop-portal-termfilechooser/config" = {
     text = ''
       [filechooser]
-      cmd=${safe-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+      cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
       env=TERMCMD=ghostty -e
     '';
   };
@@ -385,7 +385,7 @@ in
       ignoreSpace = true;
       share = true;
     };
-    initExtra = ''
+    initContent = ''
       [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
     '';
     plugins = [
