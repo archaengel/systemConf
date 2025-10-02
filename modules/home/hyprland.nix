@@ -169,6 +169,7 @@
 
       # https://wiki.hypr.land/Configuring/Gestures/
       gesture = 3, horizontal, workspace
+      gesture = 3, pinchin, special, magic
 
       # Example per-device config
       # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
