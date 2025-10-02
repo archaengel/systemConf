@@ -13,7 +13,7 @@
           "--no-pager"
         ];
         pager = "delta";
-        diff.format = "git";
+        diff-formatter = ":git";
       };
       aliases = {
         # yoinked from https://radicle.xyz/2025/08/14/jujutsu-with-radicle
