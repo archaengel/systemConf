@@ -65,6 +65,7 @@ in
       nmap
       pavucontrol
       playerctl
+      quickemu
       ripgrep
       (slack.overrideAttrs (oldAttrs: {
         # Upstream slack doesn't appear to respect ozone-platform-hint, but ozone-platform=wayland explicitly works

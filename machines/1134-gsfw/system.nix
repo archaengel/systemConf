@@ -15,6 +15,7 @@
       fw-ectool
       lm_sensors
       wl-clipboard
+      qemu
     ];
     pathsToLink = [ "/share/zsh" ];
   };
