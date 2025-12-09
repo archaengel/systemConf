@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    unison-lang = {
+      url = "github:ceedubs/unison-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-rpi5 = {
       url = "gitlab:vriska/nix-rpi5";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +60,7 @@
       nixpkgs,
       home-manager,
       nixvim,
+      unison-lang,
       dotfiles,
       ghostty,
       ...

@@ -88,4 +88,12 @@
   services.twingate = {
     enable = true;
   };
+
+  services.udev = {
+    enable = true;
+    packages = with pkgs; [
+      qmk
+      qmk-udev-rules
+    ];
+  };
 }

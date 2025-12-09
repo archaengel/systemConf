@@ -1,34 +1,19 @@
 {
   config,
   pkgs,
-  nixvim,
   dotfiles,
   username,
+  unison-lang,
   ...
 }:
 
 let
-  # TODO: Should put this in an overlay
-  # The original package overrides the PATH var in the wrapper script
-  # which prevents systems without `sed` in `usr/bin:bin` from executing
-  # the service.
-  #safe-termfilechooser = (
-  #pkgs.xdg-desktop-portal-termfilechooser.overrideAttrs (
-  #finalAttrs: prevAttrs: {
-  #patches = [
-  #../../patches/xdg-desktop-portal-termfilechooser.patch
-  #];
-  #}
-  #)
-  #);
-
   gj = pkgs.writeShellScriptBin "gj" ''
     rev=$1; shift
     bm=$(jj bookmark list -r $rev -T name)
 
     gh "$@" $bm
   '';
-
 in
 {
   imports = [
@@ -45,6 +30,7 @@ in
     };
     homeDirectory = "/home/${username}";
     packages = with pkgs; [
+      autossh
       delta
       discord
       dotfiles.packages.${pkgs.system}.nvim
@@ -63,10 +49,12 @@ in
       ncspot
       nixfmt-rfc-style
       nmap
+      meld
       pavucontrol
       playerctl
       quickemu
       ripgrep
+      shpool
       (slack.overrideAttrs (oldAttrs: {
         # Upstream slack doesn't appear to respect ozone-platform-hint, but ozone-platform=wayland explicitly works
         installPhase = ''
@@ -113,7 +101,10 @@ in
       swappy
       terraform
       twingate
+      unison-ucm
       uutils-coreutils-noprefix
+      wf-recorder
+      zathura
     ];
   };
   programs.home-manager.enable = true;
@@ -434,6 +425,10 @@ in
     };
     initContent = ''
       [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
+
+      autoload -U edit-command-line
+      zle -N edit-command-line
+      bindkey -M vicmd v edit-command-line
     '';
     plugins = [
       {

@@ -4,6 +4,7 @@
   pkgs,
   username,
   ghostty,
+  unison-lang,
   ...
 }:
 
@@ -14,6 +15,8 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  nixpkgs.overlays = [ unison-lang.overlay ];
 
   networking.networkmanager.enable = true;
 

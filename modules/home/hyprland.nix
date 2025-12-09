@@ -191,7 +191,7 @@
       bindl = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
       bindl = , XF86AudioPlay, exec, playerctl play-pause
 
-      bind = , Print, exec, grimblast edit area
+      bind = , Print, exec, grimblast --freeze edit area
       bind = $mainMod, Q, exec, $terminal
       bind = $mainMod SHIFT, C, killactive,
       bind = $mainMod, M, exit,
@@ -199,7 +199,7 @@
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, R, exec, pkill wofi || $menu
       bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
+      bind = $mainMod SHIFT, J, togglesplit, # dwindle
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, h, movefocus, l
