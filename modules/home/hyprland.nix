@@ -259,8 +259,8 @@
 
       windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
 
-      layerrule = blur, wofi
-      layerrule = ignorealpha 0, wofi
+      layerrule = blur on, match:namespace wofi
+      layerrule = ignore_alpha 0, match:namespace wofi
     '';
   };
 }

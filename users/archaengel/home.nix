@@ -15,7 +15,7 @@
     inherit username;
     homeDirectory = "/home/${username}";
     packages = with pkgs; [
-      nixfmt-rfc-style
+      nixfmt
     ];
   };
   programs.home-manager.enable = true;
@@ -225,9 +225,11 @@
 
   programs.git = {
     enable = true;
-    userName = username;
-    userEmail = "god11341258@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = username;
+        email = "god11341258@gmail.com";
+      };
       init.defaultBranch = "main";
       credential.helper = "store";
     };

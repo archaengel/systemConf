@@ -62,7 +62,7 @@
         ];
       })
       kitty
-      ghostty.packages.${system}.default
+      ghostty.packages.${stdenv.hostPlatform.system}.default
       grimblast
       tmux
       btop
@@ -118,7 +118,7 @@
         	  --time \
         	  --asterisks \
         	  --user-menu \
-        	  --cmd Hyprland
+        	  --cmd start-hyprland
       '';
     };
   };
