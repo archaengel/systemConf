@@ -379,6 +379,27 @@
         "type": "github"
       }
     },
+    "glide-browser": {
+      "inputs": {
+        "home-manager": "home-manager_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772980583,
+        "narHash": "sha256-wUpwjdQcO+2MtvMDuZsvjcJjn153fYxHD3XN8cX2E5g=",
+        "owner": "glide-browser",
+        "repo": "glide.nix",
+        "rev": "7f0caaed2901f239e996a1e54c6854eeea38a1a4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "glide-browser",
+        "repo": "glide.nix",
+        "type": "github"
+      }
+    },
     "hackage": {
       "flake": false,
       "locked": {
@@ -625,6 +646,27 @@
     "home-manager_2": {
       "inputs": {
         "nixpkgs": [
+          "glide-browser",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770818644,
+        "narHash": "sha256-DYS4jIRpRoKOzJjnR/QqEd/MlT4OZZpt8CrBLv+cjsE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "0acbd1180697de56724821184ad2c3e6e7202cd7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_3": {
+      "inputs": {
+        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -642,7 +684,7 @@
         "type": "github"
       }
     },
-    "home-manager_3": {
+    "home-manager_4": {
       "inputs": {
         "nixpkgs": [
           "nixvim",
@@ -663,7 +705,7 @@
         "type": "github"
       }
     },
-    "home-manager_4": {
+    "home-manager_5": {
       "inputs": {
         "nixpkgs": [
           "unison-lang",
@@ -1149,7 +1191,7 @@
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts_2",
         "git-hooks": "git-hooks",
-        "home-manager": "home-manager_3",
+        "home-manager": "home-manager_4",
         "nix-darwin": "nix-darwin",
         "nixpkgs": [
           "nixpkgs"
@@ -1295,7 +1337,8 @@
       "inputs": {
         "dotfiles": "dotfiles",
         "ghostty": "ghostty",
-        "home-manager": "home-manager_2",
+        "glide-browser": "glide-browser",
+        "home-manager": "home-manager_3",
         "nix-rpi5": "nix-rpi5",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsRegistry": "nixpkgsRegistry",
@@ -1477,7 +1520,7 @@
     "unison-lang": {
       "inputs": {
         "flake-utils": "flake-utils_3",
-        "home-manager": "home-manager_4",
+        "home-manager": "home-manager_5",
         "nixpkgs": [
           "nixpkgs"
         ],

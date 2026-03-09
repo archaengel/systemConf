@@ -4,6 +4,7 @@
   dotfiles,
   username,
   unison-lang,
+  glide-browser,
   rose-pine-hyprcursor,
   ...
 }:
@@ -37,6 +38,7 @@ in
       dotfiles.packages.${stdenv.hostPlatform.system}.nvim
       gh
       gj
+      glide-browser.packages.${stdenv.hostPlatform.system}.glide-browser-bin
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [
