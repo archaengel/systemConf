@@ -52,6 +52,7 @@
 
       env = XCURSOR_SIZE,24
       env = HYPRCURSOR_SIZE,24
+      env = HYPRCURSOR_THEME,rose-pine-hyprcursor
       env = GTK_THEME,Adwaita:dark
       env = GRIMBLAST_EDITOR,swappy -f 
       env = NIXOS_OZONE_WL,1
@@ -255,9 +256,9 @@
       # windowrule = float, ^(kitty)$
 
       # Example windowrule v2
-      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 
-      windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
+      # You'll probably like this.
+      windowrule = match:class .*, suppress_event maximize
 
       layerrule = blur on, match:namespace wofi
       layerrule = ignore_alpha 0, match:namespace wofi

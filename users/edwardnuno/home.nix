@@ -4,6 +4,7 @@
   dotfiles,
   username,
   unison-lang,
+  rose-pine-hyprcursor,
   ...
 }:
 
@@ -50,10 +51,12 @@ in
       nixfmt
       nmap
       meld
+      patchelf
       pavucontrol
       playerctl
       quickemu
       ripgrep
+      rose-pine-hyprcursor.packages.${stdenv.hostPlatform.system}.default
       shpool
       (slack.overrideAttrs (oldAttrs: {
         # Upstream slack doesn't appear to respect ozone-platform-hint, but ozone-platform=wayland explicitly works
