@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    unison-lang = {
+      url = "github:ceedubs/unison-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-rpi5 = {
       url = "gitlab:vriska/nix-rpi5";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +52,16 @@
       url = "github:ghostty-org/ghostty";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    rose-pine-hyprcursor = {
+      url = "github:ndom91/rose-pine-hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    glide-browser = {
+      url = "github:glide-browser/glide.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -55,6 +70,7 @@
       nixpkgs,
       home-manager,
       nixvim,
+      unison-lang,
       dotfiles,
       ghostty,
       ...

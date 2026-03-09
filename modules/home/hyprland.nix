@@ -52,6 +52,7 @@
 
       env = XCURSOR_SIZE,24
       env = HYPRCURSOR_SIZE,24
+      env = HYPRCURSOR_THEME,rose-pine-hyprcursor
       env = GTK_THEME,Adwaita:dark
       env = GRIMBLAST_EDITOR,swappy -f 
       env = NIXOS_OZONE_WL,1
@@ -191,7 +192,7 @@
       bindl = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
       bindl = , XF86AudioPlay, exec, playerctl play-pause
 
-      bind = , Print, exec, grimblast edit area
+      bind = , Print, exec, grimblast --freeze edit area
       bind = $mainMod, Q, exec, $terminal
       bind = $mainMod SHIFT, C, killactive,
       bind = $mainMod, M, exit,
@@ -199,7 +200,7 @@
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, R, exec, pkill wofi || $menu
       bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
+      bind = $mainMod SHIFT, J, togglesplit, # dwindle
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, h, movefocus, l
@@ -255,12 +256,12 @@
       # windowrule = float, ^(kitty)$
 
       # Example windowrule v2
-      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 
-      windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
+      # You'll probably like this.
+      windowrule = match:class .*, suppress_event maximize
 
-      layerrule = blur, wofi
-      layerrule = ignorealpha 0, wofi
+      layerrule = blur on, match:namespace wofi
+      layerrule = ignore_alpha 0, match:namespace wofi
     '';
   };
 }

@@ -1,34 +1,21 @@
 {
   config,
   pkgs,
-  nixvim,
   dotfiles,
   username,
+  unison-lang,
+  glide-browser,
+  rose-pine-hyprcursor,
   ...
 }:
 
 let
-  # TODO: Should put this in an overlay
-  # The original package overrides the PATH var in the wrapper script
-  # which prevents systems without `sed` in `usr/bin:bin` from executing
-  # the service.
-  #safe-termfilechooser = (
-  #pkgs.xdg-desktop-portal-termfilechooser.overrideAttrs (
-  #finalAttrs: prevAttrs: {
-  #patches = [
-  #../../patches/xdg-desktop-portal-termfilechooser.patch
-  #];
-  #}
-  #)
-  #);
-
   gj = pkgs.writeShellScriptBin "gj" ''
     rev=$1; shift
     bm=$(jj bookmark list -r $rev -T name)
 
     gh "$@" $bm
   '';
-
 in
 {
   imports = [
@@ -45,11 +32,13 @@ in
     };
     homeDirectory = "/home/${username}";
     packages = with pkgs; [
+      autossh
       delta
       discord
-      dotfiles.packages.${pkgs.system}.nvim
+      dotfiles.packages.${stdenv.hostPlatform.system}.nvim
       gh
       gj
+      glide-browser.packages.${stdenv.hostPlatform.system}.glide-browser-bin
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [
@@ -61,12 +50,16 @@ in
       jq
       kubectl
       ncspot
-      nixfmt-rfc-style
+      nixfmt
       nmap
+      meld
+      patchelf
       pavucontrol
       playerctl
       quickemu
       ripgrep
+      rose-pine-hyprcursor.packages.${stdenv.hostPlatform.system}.default
+      shpool
       (slack.overrideAttrs (oldAttrs: {
         # Upstream slack doesn't appear to respect ozone-platform-hint, but ozone-platform=wayland explicitly works
         installPhase = ''
@@ -113,7 +106,10 @@ in
       swappy
       terraform
       twingate
+      unison-ucm
       uutils-coreutils-noprefix
+      wf-recorder
+      zathura
     ];
   };
   programs.home-manager.enable = true;
@@ -208,11 +204,12 @@ in
     enable = true;
     settings = {
       splash = false;
-      preload = [
-        "${../../modules/wallpaper/blueghost_firefly.jpg}"
-      ];
       wallpaper = [
-        " , ${../../modules/wallpaper/blueghost_firefly.jpg}"
+        {
+          monitor = "";
+          path = "${../../modules/wallpaper/apollo17_moonship.jpg}";
+          fit_mode = "cover";
+        }
       ];
     };
   };
@@ -411,13 +408,15 @@ in
 
   programs.git = {
     enable = true;
-    userName = username;
-    userEmail = "god11341258@gmail.com";
-    lfs.enable = true;
-    extraConfig = {
+    settings = {
+      user = {
+        name = username;
+        email = "god11341258@gmail.com";
+      };
       init.defaultBranch = "main";
       credential.helper = "store";
     };
+    lfs.enable = true;
   };
 
   # TODO: Checkout `dotDir` to attempt to setup nixCats-style unwrapped rc for
@@ -434,6 +433,10 @@ in
     };
     initContent = ''
       [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
+
+      autoload -U edit-command-line
+      zle -N edit-command-line
+      bindkey -M vicmd v edit-command-line
     '';
     plugins = [
       {

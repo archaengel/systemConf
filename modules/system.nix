@@ -4,6 +4,7 @@
   pkgs,
   username,
   ghostty,
+  unison-lang,
   ...
 }:
 
@@ -14,6 +15,8 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  nixpkgs.overlays = [ unison-lang.overlay ];
 
   networking.networkmanager.enable = true;
 
@@ -59,7 +62,7 @@
         ];
       })
       kitty
-      ghostty.packages.${system}.default
+      ghostty.packages.${stdenv.hostPlatform.system}.default
       grimblast
       tmux
       btop
@@ -115,7 +118,7 @@
         	  --time \
         	  --asterisks \
         	  --user-menu \
-        	  --cmd Hyprland
+        	  --cmd start-hyprland
       '';
     };
   };
