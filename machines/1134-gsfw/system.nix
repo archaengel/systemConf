@@ -34,6 +34,38 @@
     ::0 apresolve.spotify.com
   '';
 
+  # microvm networking
+
+  systemd.network.enable = true;
+  systemd.network.wait-online.enable = false;
+  systemd.network.netdevs."20-microbr".netdevConfig = {
+    Kind = "bridge";
+    Name = "microbr";
+  };
+
+  systemd.network.networks."20-microbr" = {
+    matchConfig.Name = "microbr";
+    addresses = [ { Address = "10.10.0.1/24"; } ];
+    networkConfig = {
+      ConfigureWithoutCarrier = true;
+    };
+  };
+
+  systemd.network.networks."21-microvm-tap" = {
+    matchConfig.Name = "microvm*";
+    networkConfig.Bridge = "microbr";
+  };
+
+  networking.networkmanager = {
+    unmanaged = [ "microbr" ];
+  };
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "microbr" ];
+    externalInterface = "wlp5s0";
+  };
+
   virtualisation.docker.enable = true;
 
   # Avoid bugs with npm like https://github.com/NixOS/nixpkgs/issues/16441

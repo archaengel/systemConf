@@ -119,7 +119,7 @@
       },
       "locked": {
         "lastModified": 1769751437,
-        "narHash": "sha256-9pjbnBxSZpLfSESVEcqErUw2nqjgfXKonJ+Nmx/hGAw=",
+        "narHash": "sha256-Ezm2VceR/Nl2hq3aECJFsM+jMsRgh4v5qW9AECDwhGc=",
         "owner": "archaengel",
         "repo": "dotfiles",
         "rev": "5c66e7a60b98b26be640b35f44fae73d6bcc2ebf",
@@ -851,6 +851,27 @@
         "type": "github"
       }
     },
+    "microvm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "spectrum": "spectrum"
+      },
+      "locked": {
+        "lastModified": 1773872447,
+        "narHash": "sha256-IWTp4EMUfZwnuF5S/AjWfOFzCbbgkMzRwNd0qHC/EMg=",
+        "owner": "microvm-nix",
+        "repo": "microvm.nix",
+        "rev": "b202882536b018a76f0b6e71a48677f41f4de9d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microvm-nix",
+        "repo": "microvm.nix",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -1339,6 +1360,7 @@
         "ghostty": "ghostty",
         "glide-browser": "glide-browser",
         "home-manager": "home-manager_3",
+        "microvm": "microvm",
         "nix-rpi5": "nix-rpi5",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsRegistry": "nixpkgsRegistry",
@@ -1367,6 +1389,22 @@
         "owner": "ndom91",
         "repo": "rose-pine-hyprcursor",
         "type": "github"
+      }
+    },
+    "spectrum": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772189877,
+        "narHash": "sha256-i1p90Rgssb//aNiTDFq46ZG/fk3LmyRLChtp/9lddyA=",
+        "ref": "refs/heads/main",
+        "rev": "fe39e122d898f66e89ffa17d4f4209989ccb5358",
+        "revCount": 1255,
+        "type": "git",
+        "url": "https://spectrum-os.org/git/spectrum"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://spectrum-os.org/git/spectrum"
       }
     },
     "stackage": {
