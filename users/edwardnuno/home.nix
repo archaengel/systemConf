@@ -45,6 +45,7 @@ in
           gke-gcloud-auth-plugin
         ]
       ))
+      google-cloud-sql-proxy
       grimblast
       hyprnotify
       jq
@@ -53,6 +54,7 @@ in
       nixfmt
       nmap
       meld
+      mergiraf
       patchelf
       pavucontrol
       playerctl

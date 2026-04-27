@@ -26,6 +26,10 @@ in
 {
   imports = [ home-manager.nixosModules.home-manager ];
 
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   # home-manager configuration
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
@@ -49,12 +53,21 @@ in
     gid = 1000;
   };
   users.users.edwardnuno = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAADS3gZkCcw0kG0kIeJcslEB2Az/uisFp+eOvhoCHWj edwardnuno@1134-gsfw"
     ];
     group = "edwardnuno";
+    extraGroups = [
+      "wheel"
+      "docker"
+    ];
   };
+
+  programs.zsh.enable = true;
+
+  virtualisation.docker.enable = true;
 
   services.resolved.enable = true;
   networking.useDHCP = false;
@@ -113,6 +126,11 @@ in
         image = "var.img";
         size = 8192; # MB
       }
+      {
+        mountPoint = config.microvm.writableStoreOverlay;
+        image = "nix-store-overlay.img";
+        size = 8192 * 4; # MB
+      }
     ];
 
     shares = [
@@ -155,7 +173,7 @@ in
 
     hypervisor = "cloud-hypervisor";
     vcpu = 8;
-    mem = 4096;
+    mem = 4096 * 4;
     socket = "control.socket";
   };
 }

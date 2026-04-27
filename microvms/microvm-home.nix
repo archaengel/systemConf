@@ -17,7 +17,7 @@
 
   config = {
     home.username = "edwardnuno";
-    home.homeDirectory = lib.mkForce "/home/edwardnuno";
+    home.homeDirectory = "/home/edwardnuno";
     home.packages = [
       dotfiles.packages.${system}.nvim
     ];
