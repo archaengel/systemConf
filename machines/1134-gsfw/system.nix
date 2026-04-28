@@ -8,14 +8,17 @@
 {
   environment = {
     systemPackages = with pkgs; [
-      brightnessctl
       bluetui
+      brightnessctl
+      fw-ectool
       hyprlock
       hyprpaper
-      fw-ectool
       lm_sensors
-      wl-clipboard
       qemu
+      qmk
+      via
+      vial
+      wl-clipboard
     ];
     pathsToLink = [ "/share/zsh" ];
   };
@@ -126,6 +129,10 @@
     packages = with pkgs; [
       qmk
       qmk-udev-rules
+      via
+      vial
     ];
   };
+
+  hardware.keyboard.qmk.enable = true;
 }

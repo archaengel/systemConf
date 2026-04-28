@@ -110,7 +110,7 @@ in
       twingate
       unison-ucm
       uutils-coreutils-noprefix
-      wf-recorder
+      wl-screenrec
       zathura
     ];
   };
@@ -146,6 +146,7 @@ in
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    shellWrapperName = "y";
     keymap = {
       manager.prepend_keymap = [
         {

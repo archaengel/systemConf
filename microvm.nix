@@ -1,5 +1,4 @@
 {
-  config,
   microvm,
   nixpkgs,
   home-manager,

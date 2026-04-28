@@ -13,7 +13,6 @@
 
 {
   config,
-  lib,
   ...
 }:
 
@@ -37,11 +36,12 @@ in
     imports = [ ./microvm-home.nix ];
     microvm.extraZshInit = extraZshInit;
   };
-  home-manager.extraSpecialArgs = { inherit system dotfiles; };
+  home-manager.extraSpecialArgs = { inherit system dotfiles workspace; };
 
   # Claude Code CLI (from nixpkgs-unstable, unfree)
-  environment.systemPackages = [
-    pkgs.claude-code
+  environment.systemPackages = with pkgs; [
+    claude-code
+    ghostty.terminfo
   ];
   networking.hostName = hostName;
 

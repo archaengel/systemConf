@@ -1,5 +1,6 @@
 {
   config,
+  workspace,
   lib,
   dotfiles,
   system,
@@ -23,8 +24,10 @@
     ];
 
     programs.zsh = {
+      defaultKeymap = "viins";
       enable = true;
       history = {
+        path = "${workspace}/.zsh_history";
         size = 4000;
         save = 10000000;
         ignoreDups = true;
