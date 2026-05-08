@@ -3,9 +3,17 @@
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
-    package = pkgs.qutebrowser.override {
-      enableWideVine = true;
-    };
+    package =
+      (pkgs.qutebrowser.override {
+        enableWideVine = true;
+      }).overrideAttrs
+        (oldAttrs: {
+          preFixup = oldAttrs.preFixup + ''
+            makeWrapperArgs+=(
+              --set QTWEBENGINE_FORCE_USE_GBM 1
+            )
+          '';
+        });
     searchEngines = {
       DEFAULT = "https://google.com/search?udm=14&q={}";
       ddg = "https://duckduckgo.com/?q={}";
