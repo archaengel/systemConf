@@ -62,17 +62,19 @@
       url = "github:glide-browser/glide.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       home-manager,
       nixvim,
-      unison-lang,
-      dotfiles,
-      ghostty,
+      microvm,
       ...
     }:
     let
@@ -105,12 +107,14 @@
           specialArgs = inputs // personalArgs;
         };
 
-        "1134-gsfw" = nixpkgs.lib.nixosSystem {
+        "1134-gsfw" = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           modules = with nonPersonalArgs; [
             ./machines/1134-gsfw/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
+            microvm.nixosModules.host
+            ./microvm.nix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -121,7 +125,7 @@
             }
           ];
 
-          specialArgs = inputs // nonPersonalArgs;
+          specialArgs = inputs // nonPersonalArgs // { inherit system; };
         };
 
         "nixpi5" = nixpkgs.lib.nixosSystem {

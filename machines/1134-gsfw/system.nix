@@ -8,14 +8,17 @@
 {
   environment = {
     systemPackages = with pkgs; [
-      brightnessctl
       bluetui
+      brightnessctl
+      fw-ectool
       hyprlock
       hyprpaper
-      fw-ectool
       lm_sensors
-      wl-clipboard
       qemu
+      qmk
+      via
+      vial
+      wl-clipboard
     ];
     pathsToLink = [ "/share/zsh" ];
   };
@@ -33,6 +36,38 @@
     0.0.0.0 apresolve.spotify.com
     ::0 apresolve.spotify.com
   '';
+
+  # microvm networking
+
+  systemd.network.enable = true;
+  systemd.network.wait-online.enable = false;
+  systemd.network.netdevs."20-microbr".netdevConfig = {
+    Kind = "bridge";
+    Name = "microbr";
+  };
+
+  systemd.network.networks."20-microbr" = {
+    matchConfig.Name = "microbr";
+    addresses = [ { Address = "10.10.0.1/24"; } ];
+    networkConfig = {
+      ConfigureWithoutCarrier = true;
+    };
+  };
+
+  systemd.network.networks."21-microvm-tap" = {
+    matchConfig.Name = "microvm*";
+    networkConfig.Bridge = "microbr";
+  };
+
+  networking.networkmanager = {
+    unmanaged = [ "microbr" ];
+  };
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "microbr" ];
+    externalInterface = "wlp5s0";
+  };
 
   virtualisation.docker.enable = true;
 
@@ -94,6 +129,10 @@
     packages = with pkgs; [
       qmk
       qmk-udev-rules
+      via
+      vial
     ];
   };
+
+  hardware.keyboard.qmk.enable = true;
 }
