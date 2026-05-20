@@ -42,6 +42,7 @@ in
   environment.systemPackages = with pkgs; [
     claude-code
     ghostty.terminfo
+    git
   ];
   networking.hostName = hostName;
 

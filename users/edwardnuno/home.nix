@@ -36,6 +36,7 @@ in
       delta
       discord
       dotfiles.packages.${stdenv.hostPlatform.system}.nvim
+      fzf
       gh
       gj
       glide-browser.packages.${stdenv.hostPlatform.system}.glide-browser-bin

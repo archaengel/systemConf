@@ -15,6 +15,24 @@
         pager = "delta";
         diff-formatter = ":git";
       };
+      template-aliases = {
+        "slugify(str)" = ''
+          truncate_end(
+            65,
+            str.first_line()
+              .replace(regex:'[^[[:alnum:]].]', '-')
+              .replace(regex:'-{2,}', '-')
+              .replace(regex:'\.{2,}', '.')
+              .replace(regex:'(^-+|-+$)', ''')
+              .lower()
+          )
+        '';
+      };
+      templates = {
+        git_push_bookmark = ''
+          "archaengel/" ++ slugify(description) ++ "/" ++ change_id.short()
+        '';
+      };
       aliases = {
         # yoinked from https://radicle.xyz/2025/08/14/jujutsu-with-radicle
         tug = [
