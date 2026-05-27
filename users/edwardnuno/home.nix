@@ -36,6 +36,7 @@ in
       delta
       discord
       dotfiles.packages.${stdenv.hostPlatform.system}.nvim
+      dunst
       fzf
       gh
       gj
@@ -48,7 +49,6 @@ in
       ))
       google-cloud-sql-proxy
       grimblast
-      hyprnotify
       jq
       kubectl
       ncspot

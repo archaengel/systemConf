@@ -7,7 +7,7 @@
       exec-once = [
         "${pkgs.waybar}/bin/waybar"
         "${pkgs.hyprpaper}/bin/hyprpaper"
-        "hyprnotify"
+        "dunst"
         "hyprctl keyword monitor ,preferred,auto-up,auto"
       ];
     };
