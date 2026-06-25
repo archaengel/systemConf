@@ -195,7 +195,8 @@
       bind = , Print, exec, grimblast --freeze edit area
       bind = $mainMod, Q, exec, $terminal
       bind = $mainMod SHIFT, C, killactive,
-      bind = $mainMod, M, exit,
+      bind = $mainMod, M, exec, hyprlock
+      bind = $mainMod SHIFT, M, exit,
       bind = $mainMod, E, exec, $fileManager
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, R, exec, pkill wofi || $menu

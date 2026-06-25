@@ -41,8 +41,10 @@ in
   # Claude Code CLI (from nixpkgs-unstable, unfree)
   environment.systemPackages = with pkgs; [
     claude-code
+    pi-coding-agent
     ghostty.terminfo
     git
+    jq
   ];
   networking.hostName = hostName;
 
