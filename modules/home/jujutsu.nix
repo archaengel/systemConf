@@ -2,6 +2,7 @@
 {
   programs.jujutsu = {
     enable = true;
+    ediff = pkgs.lib.mkForce false;
     settings = {
       user = {
         name = username;

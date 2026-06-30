@@ -6,6 +6,7 @@
   unison-lang,
   glide-browser,
   rose-pine-hyprcursor,
+  ghostty,
   ...
 }:
 
@@ -93,7 +94,11 @@ in
     --ozone-platform=wayland
   '';
 
-  programs.emacs.enable = true;
+  programs.doom-emacs = {
+    enable = true;
+    doomDir = ../../modules/doomdir;
+    extraPackages = epkgs: [ epkgs.ghostel ];
+  };
 
   programs.yazi = {
     enable = true;
