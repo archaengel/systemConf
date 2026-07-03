@@ -16,19 +16,20 @@
     '';
   };
 
-  nixpkgs.overlays = [ unison-lang.overlay ];
+  # this currently breaks emacs b/c its upgrade is blocked on a api being re-implemented
+  # https://github.com/NixOS/nixpkgs/pull/537058
+  # nixpkgs.overlays = [ unison-lang.overlay ];
 
   networking.networkmanager = {
     enable = true;
     wifi.powersave = true;
-};
+  };
 
   # Set your time zone.
   services.automatic-timezoned.enable = true;
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
   fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
     maple-mono.NL-NF
   ];
 
