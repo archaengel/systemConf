@@ -94,10 +94,14 @@ in
     --ozone-platform=wayland
   '';
 
-  programs.doom-emacs = {
+  programs.emacs = {
     enable = true;
-    doomDir = ../../modules/doomdir;
+    package = pkgs.emacs30-nox;
     extraPackages = epkgs: [ epkgs.ghostel ];
+  };
+
+  programs.ghostty = {
+
   };
 
   programs.yazi = {

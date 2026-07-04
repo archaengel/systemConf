@@ -5,6 +5,7 @@
   username,
   ghostty,
   unison-lang,
+  emacs-overlay,
   ...
 }:
 
@@ -16,9 +17,12 @@
     '';
   };
 
-  # this currently breaks emacs b/c its upgrade is blocked on a api being re-implemented
-  # https://github.com/NixOS/nixpkgs/pull/537058
-  # nixpkgs.overlays = [ unison-lang.overlay ];
+  nixpkgs.overlays = [
+    # this currently breaks emacs b/c its upgrade is blocked on a api being
+    # re-implemented https://github.com/NixOS/nixpkgs/pull/537058
+    # unison-lang.overlay
+    emacs-overlay.overlay
+  ];
 
   networking.networkmanager = {
     enable = true;

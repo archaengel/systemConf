@@ -28,13 +28,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-doom-emacs-unstraightened = {
-      url = "github:marienz/nix-doom-emacs-unstraightened";      
-      inputs.nixpkgs.follows = "";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-     emacs-overlay.url = "github:nix-community/emacs-overlay";
-     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     unison-lang = {
       url = "github:ceedubs/unison-nix";
@@ -131,8 +128,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.${username} = import ./machines/1134-nixmac/home.nix;
               home-manager.sharedModules = [
-	        nixvim.homeManagerModules.nixvim
-                inputs.nix-doom-emacs-unstraightened.homeModule
+                nixvim.homeManagerModules.nixvim
               ];
               home-manager.extraSpecialArgs = inputs // personalArgs;
               home-manager.backupFileExtension = "backup";
