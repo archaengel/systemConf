@@ -69,7 +69,14 @@
     externalInterface = "wlp5s0";
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    containers.enable = true;
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   # Avoid bugs with npm like https://github.com/NixOS/nixpkgs/issues/16441
   programs.npm.enable = true;
