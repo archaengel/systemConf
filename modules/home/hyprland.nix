@@ -30,7 +30,7 @@
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
       monitor = ,preferred,auto-up,auto
-
+      monitor = Unknown-1,preferred,auto-up,2
 
       ###################
       ### MY PROGRAMS ###

@@ -1,0 +1,134 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
+  environment = {
+    systemPackages = with pkgs; [
+      bluetui
+      brightnessctl
+      fw-ectool
+      hyprlock
+      hyprpaper
+      lm_sensors
+      qemu
+      qmk
+      via
+      vial
+      wl-clipboard
+    ];
+    pathsToLink = [ "/share/zsh" ];
+  };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libgcc
+    ];
+  };
+
+  # ncspot dependency errors because of api sunset
+  # https://github.com/hrkfdn/ncspot/issues/1676#issue-3290312497
+  networking.extraHosts = ''
+    0.0.0.0 apresolve.spotify.com
+    ::0 apresolve.spotify.com
+  '';
+
+  # microvm networking
+
+  systemd.network.enable = true;
+  systemd.network.wait-online.enable = false;
+  systemd.network.netdevs."20-microbr".netdevConfig = {
+    Kind = "bridge";
+    Name = "microbr";
+  };
+
+  systemd.network.networks."20-microbr" = {
+    matchConfig.Name = "microbr";
+    addresses = [ { Address = "10.10.0.1/24"; } ];
+    networkConfig = {
+      ConfigureWithoutCarrier = true;
+    };
+  };
+
+  systemd.network.networks."21-microvm-tap" = {
+    matchConfig.Name = "microvm*";
+    networkConfig.Bridge = "microbr";
+  };
+
+  networking.networkmanager = {
+    unmanaged = [ "microbr" ];
+  };
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "microbr" ];
+    externalInterface = "wlp5s0";
+  };
+
+  virtualisation.docker.enable = true;
+
+  # Avoid bugs with npm like https://github.com/NixOS/nixpkgs/issues/16441
+  programs.npm.enable = true;
+
+  programs.ssh.startAgent = true;
+
+  security.pam.services.greetd = {
+    rules.auth.unix = {
+      enable = true;
+      control = "sufficient";
+      args = [
+        "try_first_pass"
+        "likeauth"
+        "nullok"
+      ];
+    };
+
+    rules.auth.fprintd = {
+      enable = true;
+      order = config.security.pam.services.greetd.rules.auth.unix.order + 1;
+      control = "sufficient";
+    };
+  };
+
+  # Disabling due to disputed: CVE-2024-37408
+  security.pam.services.sudo.fprintAuth = false;
+  security.pam.services.su.fprintAuth = false;
+
+  security.pam.services.hyprlock = {
+    rules.auth.unix = {
+      enable = true;
+      control = "sufficient";
+      args = [
+        "try_first_pass"
+        "likeauth"
+        "nullok"
+      ];
+    };
+
+    rules.auth.fprintd = {
+      enable = true;
+      order = config.security.pam.services.hyprlock.rules.auth.unix.order + 1;
+      control = "sufficient";
+    };
+  };
+
+  services.fprintd = {
+    enable = true;
+  };
+
+  services.udev = {
+    enable = true;
+    packages = with pkgs; [
+      qmk
+      qmk-udev-rules
+      via
+      vial
+    ];
+  };
+
+  hardware.keyboard.qmk.enable = true;
+}

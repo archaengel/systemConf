@@ -18,7 +18,10 @@
 
   nixpkgs.overlays = [ unison-lang.overlay ];
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.powersave = true;
+};
 
   # Set your time zone.
   services.automatic-timezoned.enable = true;
@@ -26,6 +29,7 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    maple-mono.NL-NF
   ];
 
   i18n = {
@@ -37,6 +41,7 @@
   console = {
     font = "Lat2-Terminus16";
     useXkbConfig = true; # use xkb.options in tty.
+    earlySetup = true;
   };
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "ctrl:nocaps";

@@ -75,6 +75,7 @@
       home-manager,
       nixvim,
       microvm,
+      nixos-hardware,
       ...
     }:
     let
@@ -107,6 +108,24 @@
           specialArgs = inputs // personalArgs;
         };
 
+        "1134-nixmac" = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          modules = with personalArgs; [
+            ./machines/1134-nixmac/configuration.nix
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./machines/1134-nixmac/home.nix;
+              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.extraSpecialArgs = inputs // personalArgs;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+
+          specialArgs = inputs // personalArgs // { inherit system; };
+        };
         "1134-gsfw" = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           modules = with nonPersonalArgs; [
