@@ -161,6 +161,17 @@ in
     };
   };
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs30-nox;
+    extraPackages =
+      epkgs: with epkgs; [
+        ghostel
+        tree-sitter
+        treesit-grammars.with-all-grammars
+      ];
+  };
+
   programs.hyprlock = {
     enable = true;
     settings = {
