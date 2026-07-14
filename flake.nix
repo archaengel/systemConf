@@ -11,7 +11,7 @@
     ];
 
     extra-substituters = [
-      "https://nix-community.cachix.org"
+
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -81,6 +81,11 @@
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -89,7 +94,7 @@
       home-manager,
       nixvim,
       microvm,
-      nixos-hardware,
+        nix-darwin,
       nix-doom-emacs-unstraightened,
       ...
     }:
@@ -184,6 +189,26 @@
 
           specialArgs = inputs // personalArgs;
         };
+      };
+
+      darwinConfigurations."gsmac" = nix-darwin.lib.darwinSystem rec {
+          system = "aarch64-darwin";
+          modules = with nonPersonalArgs; [
+            ./machines/gsmac/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./machines/gsmac/home.nix;
+              home-manager.sharedModules = [
+                nix-doom-emacs-unstraightened.homeModule
+              ];
+              home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+
+          specialArgs = inputs // nonPersonalArgs // { inherit system; };
       };
     };
 }

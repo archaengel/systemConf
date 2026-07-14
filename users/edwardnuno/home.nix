@@ -16,9 +16,14 @@ let
 
     gh "$@" $bm
   '';
+    isDarwin = system: (builtins.elem pkgs.hostPlatform.system pkgs.lib.platforms.darwin);
+    homePrefix = system: if isDarwin pkgs.hostPlatform.system then "/Users" else "/home";
 in
 {
-  imports = [
+  imports = if isDarwin then [
+    ../../modules/home/jujutsu.nix
+    ../../modules/home/tmux.nix
+  ] else [
     ../../modules/home/jujutsu.nix
     ../../modules/home/hyprland.nix
     ../../modules/home/tmux.nix
@@ -30,7 +35,7 @@ in
     sessionVariables = {
       EDITOR = "nvim";
     };
-    homeDirectory = "/home/${username}";
+    homeDirectory = "${homePrefix}/${username}";
     packages = with pkgs; [
       autossh
       delta
