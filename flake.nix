@@ -81,7 +81,7 @@
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,11 +90,12 @@
 
   outputs =
     inputs@{
+      self,
       nixpkgs,
       home-manager,
       nixvim,
       microvm,
-        nix-darwin,
+      nix-darwin,
       nix-doom-emacs-unstraightened,
       ...
     }:
@@ -172,6 +173,35 @@
           specialArgs = inputs // nonPersonalArgs // { inherit system; };
         };
 
+        "vm-gsmac" = nixpkgs.lib.nixosSystem rec {
+          system = "aarch64-linux";
+          modules = with nonPersonalArgs; [
+            ./machines/1134-gsfw/configuration.nix
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            microvm.nixosModules.host
+            ./microvm.nix
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./machines/1134-gsfw/home.nix;
+              home-manager.sharedModules = [
+                nix-doom-emacs-unstraightened.homeModule
+              ];
+              home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+
+          specialArgs =
+            inputs
+            // nonPersonalArgs
+            // {
+              inherit system;
+              isVirtualized = true;
+            };
+        };
+
         "nixpi5" = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = with personalArgs; [
@@ -192,23 +222,59 @@
       };
 
       darwinConfigurations."gsmac" = nix-darwin.lib.darwinSystem rec {
-          system = "aarch64-darwin";
-          modules = with nonPersonalArgs; [
-            ./machines/gsmac/configuration.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./machines/gsmac/home.nix;
-              home-manager.sharedModules = [
-                nix-doom-emacs-unstraightened.homeModule
-              ];
-              home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
-              home-manager.backupFileExtension = "backup";
-            }
-          ];
+        system = "aarch64-darwin";
+        modules = with nonPersonalArgs; [
+          ./machines/gsmac/configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = import ./machines/gsmac/home.nix;
+            home-manager.sharedModules = [
+              nix-doom-emacs-unstraightened.homeModule
+            ];
+            home-manager.extraSpecialArgs = inputs // nonPersonalArgs;
+            home-manager.backupFileExtension = "backup";
+          }
+          {
+            nix.distributedBuilds = true;
+            nix.linux-builder.enable = true;
+            nix.linux-builder.ephemeral = true;
+            nix.linux-builder.maxJobs = 6;
+            nix.linux-builder.workingDirectory = "/var/lib/linux-builder.log";
+            nix.linux-builder.config = {
+              nix.settings.system-features = [ "apple-virt" ];
+              virtualisation.darwin-builder.diskSize = 80 * 1024;
+            };
+            nix.linux-builder.systems = [ "aarch64-linux" ];
+            nix.settings.trusted-users = [
+              "@admin"
+              nonPersonalArgs.username
+            ];
+            nix.settings.extra-trusted-users = [
+              "@admin"
+              nonPersonalArgs.username
+            ];
+          }
+          {
+            system.activationScripts.extraActivation.text = ''
+              softwareupdate --install-rosetta --agree-to-license
+            '';
+          }
+          #{
+          #launchd.daemons.linux-builder = {
+          #serviceConfig = {
+          #KeepAlive = true;
+          #RunAtLoad = true;
+          #StandardOutPath = "/var/log/darwin-builder.log";
+          #StandardErrorPath = "/var/log/darwin-builder.log";
+          #};
+          #};
+          #}
+        ];
 
-          specialArgs = inputs // nonPersonalArgs // { inherit system; };
+        specialArgs = inputs // nonPersonalArgs // { inherit system; };
       };
+      packages.aarch64-darwin.vm-gsmac = self.nixosConfigurations.vm-gsmac.config.system.build.vm;
     };
 }

@@ -1,11 +1,8 @@
 {
-  config,
   pkgs,
   dotfiles,
   username,
-  unison-lang,
   glide-browser,
-  rose-pine-hyprcursor,
   ...
 }:
 
@@ -16,8 +13,8 @@ let
 
     gh "$@" $bm
   '';
-    isDarwin = system: (builtins.elem pkgs.hostPlatform.system pkgs.lib.platforms.darwin);
-    homePrefix = if isDarwin pkgs.hostPlatform.system then "/Users" else "/home";
+  isDarwin = system: (builtins.elem pkgs.hostPlatform.system pkgs.lib.platforms.darwin);
+  homePrefix = if isDarwin pkgs.hostPlatform.system then "/Users" else "/home";
 in
 {
   imports = [
@@ -38,6 +35,8 @@ in
       fzf
       gh
       gj
+      utm
+      lima
       glide-browser.packages.${stdenv.hostPlatform.system}.glide-browser-bin
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;

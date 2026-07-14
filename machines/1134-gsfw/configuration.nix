@@ -3,16 +3,16 @@
   lib,
   pkgs,
   username,
+  isVirtualized ? false,
   ...
 }:
 
 {
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
     ../../modules/system.nix
     ./system.nix
-  ];
+  ]
+  ++ (lib.optional (!isVirtualized) ./hardware-configuration.nix);
 
   nix.gc = {
     automatic = true;

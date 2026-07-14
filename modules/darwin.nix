@@ -18,12 +18,12 @@
   };
 
   nixpkgs.overlays = [
-    (import ../overlays/darwin.nix {inherit pkgs;})
+    (import ../overlays/darwin.nix { inherit pkgs; })
     emacs-overlay.overlay
   ];
 
   fonts.packages = with pkgs; [
-    maple-mono.NL-NF
+    #maple-mono.NL-NF
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

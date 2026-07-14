@@ -15,7 +15,7 @@
   nix.gc = {
     automatic = true;
     interval = [
-      {Weekday = 7;}
+      { Weekday = 7; }
     ];
   };
 

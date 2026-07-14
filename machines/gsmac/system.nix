@@ -11,10 +11,11 @@
     systemPackages = with pkgs; [
       qemu
       qmk
+      git
+      gcc
     ];
     pathsToLink = [ "/share/zsh" ];
   };
-
 
   # virtualisation = {
   #   docker.enable = true;
@@ -31,10 +32,10 @@
   system.primaryUser = username;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 10;
   system.defaults.NSGlobalDomain.KeyRepeat = 2;
-  
+
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
-  
+
   # services.yabai.enable = false;
   # services.yabai.enableScriptingAddition = true;
   # services.yabai.config = {

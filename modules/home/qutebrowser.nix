@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.qutebrowser = {
-    enable = true;
+    enable = pkgs.stdenv.hostPlatform.system != "aarch64-linux";
     loadAutoconfig = true;
     package =
       (pkgs.qutebrowser.override {

@@ -1,8 +1,8 @@
 { pkgs, ... }:
 with pkgs;
-    (final: prev: {
+(final: prev: {
 
-      borders = callPackage ./packages/borders { };
+  borders = callPackage ./packages/borders { };
 
-      zsh-jj = callPackage ./packages/zsh-jj { };
-    })
+  zsh-jj = callPackage ./packages/zsh-jj { };
+})

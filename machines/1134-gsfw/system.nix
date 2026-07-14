@@ -7,19 +7,23 @@
 
 {
   environment = {
-    systemPackages = with pkgs; [
-      bluetui
-      brightnessctl
-      fw-ectool
-      hyprlock
-      hyprpaper
-      lm_sensors
-      qemu
-      qmk
-      via
-      vial
-      wl-clipboard
-    ];
+    systemPackages =
+      with pkgs;
+      [
+        bluetui
+        brightnessctl
+        fw-ectool
+        hyprlock
+        hyprpaper
+        lm_sensors
+        qemu
+        qmk
+        wl-clipboard
+      ]
+      ++ lib.optionals (stdenv.hostPlatform.system != "aarch64-linux") [
+        via
+        vial
+      ];
     pathsToLink = [ "/share/zsh" ];
   };
 
@@ -128,17 +132,21 @@
   };
 
   services.twingate = {
-    enable = true;
+    enable = pkgs.stdenv.hostPlatform.system != "aarch64-linux";
   };
 
   services.udev = {
     enable = true;
-    packages = with pkgs; [
-      qmk
-      qmk-udev-rules
-      via
-      vial
-    ];
+    packages =
+      with pkgs;
+      [
+        qmk
+      ]
+      ++ lib.optionals (stdenv.hostPlatform.system != "aarch64-linux") [
+        qmk-udev-rules
+        via
+        vial
+      ];
   };
 
   hardware.keyboard.qmk.enable = true;
