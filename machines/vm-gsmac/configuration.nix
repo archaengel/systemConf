@@ -24,48 +24,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.bluetooth.enable = true;
+  hardware.graphics.enable = true;
 
-  # Framework fan control
-  hardware.fw-fanctrl = {
-    enable = true;
-    config = {
-      defaultStrategy = "lazy";
-      strategies = {
-        "lazy" = {
-          fanSpeedUpdateFrequency = 5;
-          movingAverageInterval = 30;
-          speedCurve = [
-            {
-              temp = 0;
-              speed = 25;
-            }
-            {
-              temp = 50;
-              speed = 25;
-            }
-            {
-              temp = 65;
-              speed = 35;
-            }
-            {
-              temp = 70;
-              speed = 45;
-            }
-            {
-              temp = 75;
-              speed = 60;
-            }
-            {
-              temp = 80;
-              speed = 100;
-            }
-          ];
-        };
-      };
-    };
-  };
+  nixpkgs.config.allowUnsupportedSystem = true;
 
-  networking.hostName = "1134-gsfw"; # Define your hostname.
+  services.spice-vdagentd.enable = true;
+  environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
+
+  networking.hostName = "vm-gsmac"; # Define your hostname.
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

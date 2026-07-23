@@ -176,7 +176,7 @@
         "vm-gsmac" = nixpkgs.lib.nixosSystem rec {
           system = "aarch64-linux";
           modules = with nonPersonalArgs; [
-            ./machines/1134-gsfw/configuration.nix
+            ./machines/vm-gsmac/configuration.nix
             ./users/${username}/nixos.nix
             home-manager.nixosModules.home-manager
             microvm.nixosModules.host
@@ -184,7 +184,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./machines/1134-gsfw/home.nix;
+              home-manager.users.${username} = import ./machines/vm-gsmac/home.nix;
               home-manager.sharedModules = [
                 nix-doom-emacs-unstraightened.homeModule
               ];
@@ -193,13 +193,7 @@
             }
           ];
 
-          specialArgs =
-            inputs
-            // nonPersonalArgs
-            // {
-              inherit system;
-              isVirtualized = true;
-            };
+          specialArgs = inputs // nonPersonalArgs // { inherit system; };
         };
 
         "nixpi5" = nixpkgs.lib.nixosSystem {
