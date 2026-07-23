@@ -29,7 +29,7 @@
     };
 
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
+      url = "github:nix-community/emacs-overlay/1057695101686dcde2ffc51fd891d348a22c6da9";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -135,6 +135,7 @@
               home-manager.users.${username} = import ./machines/1134-nixmac/home.nix;
               home-manager.sharedModules = [
                 nixvim.homeManagerModules.nixvim
+                nix-doom-emacs-unstraightened.homeModule
               ];
               home-manager.extraSpecialArgs = inputs // personalArgs;
               home-manager.backupFileExtension = "backup";

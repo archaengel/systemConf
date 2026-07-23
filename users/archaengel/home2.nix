@@ -94,14 +94,30 @@ in
     --ozone-platform=wayland
   '';
 
+  # programs.doom-emacs = {
+  #   enable = true;
+  #   emacs = pkgs.emacs-git-nox;
+  #   extraPackages =
+  #     epkgs: with epkgs; [
+  #       ghostel
+  #       tree-sitter
+  #       treesit-grammars.with-all-grammars
+  #     ];
+  #   extraBinPackages = with pkgs; [
+  #     ripgrep
+  #     fd
+  #     typescript-language-server
+  #     nixd
+  #     prettier
+  #     eslint_d
+  #   ];
+  #   provideEmacs = false;
+  #   doomDir = "${dotfiles}/doom/.config/doom";
+  # };
+
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs30-nox;
-    extraPackages = epkgs: [ epkgs.ghostel ];
-  };
-
-  programs.ghostty = {
-
+    package = dotfiles.packages.${pkgs.stdenv.hostPlatform.system}.emacs;
   };
 
   programs.yazi = {
